@@ -1,10 +1,16 @@
 <template>
-
+<div id="app">
+<tar-bar></tar-bar>
+</div>
 </template>
 
 <script>
+import TabBar from './components/comment/tabbar/TabBar.vue'
 export default {
-  name:"App"
+  name:"App",
+  components:{
+    TabBar
+  }
 }
 </script>
 
