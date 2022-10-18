@@ -5,6 +5,7 @@
       <template #center> 购物街 </template>
     </nav-bar>
     <!-- 轮播图 -->
+    <swiper></swiper>
   </div>
 </template>
 
@@ -12,7 +13,7 @@
 //顶部导航栏组件
 import NavBar from "@/components/connent/navbar/NavBar.vue";
 //轮播图组件
-import Swiper from "./childrenComponents/Swiper.vue";
+import Swiper from "./childrenComponents/swiper/Swiper.vue";
 export default {
   name: "Home",
   components: {
