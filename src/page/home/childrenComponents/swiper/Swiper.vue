@@ -13,6 +13,14 @@
         </a>
       </li>
     </ul>
+    <ol>
+      <li
+        v-for="(item, index) in cicle"
+        :key="index"
+        :style="getCicleColor(index)"
+        @click="removePic(index)"
+      ></li>
+    </ol>
   </div>
 </template>
 
@@ -36,6 +44,12 @@ export default {
   created() {
     this.getList();
     this.timeMove();
+  },
+  computed: {
+    cicle() {
+      const leng = this.list.length - 1;
+      return this.list.slice(1, leng);
+    },
   },
   methods: {
     //动态获取轮播图数据
@@ -61,6 +75,22 @@ export default {
         this.list.push(this.list[1]);
       }
     },
+
+    //改变小圆点的颜色
+    getCicleColor(index) {
+      return this.currentindex == index + 1
+        ? { backgroundColor: "rgb(255,22,22)" }
+        : { backgroundColor: "#fff" };
+    },
+
+    //点击小圆点改变图片
+    removePic(item) {
+      clearInterval(this.timer);
+      this.timer = null;
+      this.currentindex = item + 1;
+      this.animate = false;
+      this.lNum = "-" + this.currentindex * 100 + "%";
+    },
     //轮播图定时器移动
     timeMove() {
       //每隔3s做一次移动的动画
@@ -82,6 +112,7 @@ export default {
         this.currentindex = this.list.length - 2;
         this.lNum = "-" + this.currentindex * 100 + "%";
       }
+      if (!this.timer) this.timeMove();
     },
     //移动动画定义
     getanimate() {
@@ -102,7 +133,6 @@ export default {
       this.endX = e.changedTouches[0].pageX;
       this.movex = this.endX - this.startX;
       this.ml = 0;
-      console.log(this.movex);
       if (this.movex < -50) {
         this.currentindex += 1;
       } else if (this.movex > 50) {
@@ -143,5 +173,25 @@ export default {
 .pic img {
   width: 100%;
   height: 100%;
+}
+
+ol {
+  position: absolute;
+  bottom: 5px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 20%;
+  height: 20px;
+  border-radius: 5px;
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+ol li {
+  float: left;
+  margin: 3px 11px;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background-color: #fff;
 }
 </style>
