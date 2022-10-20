@@ -188,9 +188,9 @@ ol {
 
 ol li {
   float: left;
-  margin: 3px 11px;
-  width: 15px;
-  height: 15px;
+  margin: 3% 9%;
+  width: 13%;
+  height: 75%;
   border-radius: 50%;
   background-color: #fff;
 }

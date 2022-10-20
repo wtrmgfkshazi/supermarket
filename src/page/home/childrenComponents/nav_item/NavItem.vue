@@ -41,7 +41,7 @@ export default {
 .nav-item {
   display: flex;
   width: 100%;
-  height: 69px;
+  height: 79px;
 }
 
 .nav-item a {
