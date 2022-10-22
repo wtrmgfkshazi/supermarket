@@ -21,3 +21,17 @@ export function request(config) {
     return instance1(config)
 }
 
+
+
+export function goods(type, page) {
+    const instance1 = axios.create({
+        baseURL: "http://127.0.0.1/api/goods",
+    });
+    return instance1({
+        method: "post",
+        params: {
+            type, page
+        }
+    }, type, page)
+}
+

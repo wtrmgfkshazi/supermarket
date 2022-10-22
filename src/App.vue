@@ -1,7 +1,7 @@
 <template>
   <div>
     <router-view></router-view>
-    <main-tab-bar></main-tab-bar>
+    <main-tab-bar class="main-tab-bar"></main-tab-bar>
   </div>
 </template>
 
@@ -19,4 +19,8 @@ export default {
 <style scoped>
 @import url("./assets/css/base.css");
 @import url("./assets/css/normail.css");
+.main-tab-bar {
+  z-index: 99;
+  background-color: #fff;
+}
 </style>

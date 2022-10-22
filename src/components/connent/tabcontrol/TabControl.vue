@@ -30,11 +30,15 @@ export default {
   methods: {
     styleColor(item) {
       return this.currentIndex == item
-        ? { borderBottom: "2px solid rgb(219, 33, 160)" }
+        ? [
+            { borderBottom: "2px solid rgb(219, 33, 160)" },
+            { color: "rgb(219, 33, 160)" },
+          ]
         : {};
     },
     itemClick(item) {
       this.currentIndex = item;
+      this.$emit("tabClick", item);
     },
   },
 };
@@ -49,6 +53,7 @@ export default {
   height: 49px;
   text-align: center;
   line-height: 49px;
+  font-size: 14px;
 }
 
 .tab-control div {
