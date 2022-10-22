@@ -32,7 +32,7 @@ import TabControl from "@/components/connent/tabcontrol/TabControl.vue";
 import Goods from "@/components/connent/goods/Goods.vue";
 
 //引入网络请求
-import { goods } from "@/network/request.js";
+import { goods } from "@/network/home.js";
 
 export default {
   name: "Home",
@@ -54,7 +54,6 @@ export default {
     NavItem,
     TabControl,
     Goods,
-    Goods,
   },
   created() {
     this.getGoods("pops");
@@ -65,7 +64,7 @@ export default {
     getGoods(type) {
       const page = this.goodsList[type].page + 1;
       goods(type, page).then((res) => {
-        this.goodsList[type].list.push(...res.data.data);
+        this.goodsList[type].list.push(...res.data);
       });
     },
     showGoods(item) {
