@@ -34,6 +34,7 @@ export default {
       //滚动内部元素可不可以被点击
       click: true,
       pullUpLoad: this.pullUpLoad,
+      disableTouch: false,
     });
     this.scroll.on("scroll", (position) => {
       this.$emit("scroll", position);

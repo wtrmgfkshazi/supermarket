@@ -14,10 +14,6 @@ export default {
 
 <style scoped>
 .nav {
-  position: fixed;
-  right: 0;
-  left: 0;
-  top: 0;
   display: flex;
   width: 100%;
   height: 44px;

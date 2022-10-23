@@ -4,6 +4,14 @@
     <nav-bar class="nav-center">
       <template #center> 购物街 </template>
     </nav-bar>
+    <!-- 吸顶效果控制组件,到达位置后出现 -->
+    <tab-control
+      v-show="isFixed"
+      class="tabControl"
+      :title="indexTitle"
+      @tabClick="showGoods"
+      ref="tabcontrol2"
+    ></tab-control>
     <!-- 此处不用“:”，传为字符串 -->
     <scroll
       class="content"
@@ -14,14 +22,15 @@
       @pulling-up="showGoodsAgain"
     >
       <!-- 轮播图 -->
-      <swiper></swiper>
+      <!-- 监听轮播图的加载，轮播图的体积较大，如果加载完成，其他小图片也是，可以计算tabcontrol的距离 -->
+      <swiper @load="imgLoad"></swiper>
       <!-- 导航组件 -->
       <nav-item></nav-item>
       <!-- 控制组件 -->
       <tab-control
-        class="tab-control"
         :title="indexTitle"
         @tabClick="showGoods"
+        ref="tabcontrol1"
       ></tab-control>
       <!-- 展示商品组件 -->
       <goods :list="goodsList[type].list" @load="scollAgain"></goods>
@@ -67,6 +76,8 @@ export default {
       typeTitle: ["pops", "news", "sell"],
       type: "pops",
       isBackShow: false,
+      offsetTop: 0,
+      isFixed: false,
     };
   },
   components: {
@@ -94,13 +105,19 @@ export default {
     },
     showGoods(item) {
       this.type = this.typeTitle[item];
+      //让吸顶的导航栏和不吸顶的导航栏点击的内容保持一致
+      this.$refs.tabcontrol1.currentIndex = item;
+      this.$refs.tabcontrol2.currentIndex = item;
     },
     backTop() {
       // console.log(this.$refs.scroll);
       this.$refs.scroll.scrollTo(0, 0);
     },
     backShow(item) {
+      //1.判断返回顶部按钮的隐藏和显示
       this.isBackShow = item.y < -300;
+      //2.决定tabcontrol是否吸顶  offsetTop是固定值，不会随着滚动而改变
+      this.isFixed = -item.y > this.offsetTop;
     },
     showGoodsAgain() {
       this.getGoods(this.type);
@@ -112,6 +129,11 @@ export default {
       const refresh = debounce(this.$refs.scroll.refresh);
       refresh();
     },
+    imgLoad() {
+      //this.$refs.tabcontrol --> 获得组件
+      //this.$refs.tabcontrol.$el --> 获得元素
+      this.offsetTop = this.$refs.tabcontrol1.$el.offsetTop;
+    },
   },
 };
 </script>
@@ -122,11 +144,6 @@ export default {
   height: 100vh;
 }
 .nav-center {
-  z-index: 999;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
   font-size: 20px;
   font-weight: 600;
   color: #fff;
@@ -136,8 +153,9 @@ export default {
   border-bottom: 10px solid #f2f2f2;
 }
 
-.tab-control {
-  background-color: #fff;
+.tabControl {
+  position: relative;
+  z-index: 99;
 }
 
 .content {

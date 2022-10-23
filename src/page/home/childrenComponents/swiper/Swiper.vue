@@ -9,7 +9,7 @@
     >
       <li v-for="(item, index) in list" :key="index">
         <a class="pic" :href="item.network">
-          <img :src="item.pic" alt="" />
+          <img :src="item.pic" alt="" @load="load" />
         </a>
       </li>
     </ul>
@@ -39,6 +39,7 @@ export default {
       endX: 0,
       movex: 0,
       ml: 0,
+      isLoad: false,
     };
   },
   created() {
@@ -52,6 +53,14 @@ export default {
     },
   },
   methods: {
+    //监听图片是否加载完成
+    load() {
+      if (!this.isLoad) {
+        this.$emit("load");
+        this.isLoad = !this.isLoad;
+      }
+    },
+
     //动态获取轮播图数据
     getList() {
       request({

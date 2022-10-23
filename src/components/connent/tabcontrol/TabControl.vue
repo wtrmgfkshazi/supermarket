@@ -44,7 +44,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped="scoped">
 .tab-control {
   display: flex;
   justify-content: space-around;
@@ -54,6 +54,7 @@ export default {
   text-align: center;
   line-height: 49px;
   font-size: 14px;
+  background-color: #fff;
 }
 
 .tab-control div {

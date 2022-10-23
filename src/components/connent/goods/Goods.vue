@@ -8,7 +8,7 @@
       <div class="title">{{ item.title }}</div>
       <div class="msg">
         <span class="price">{{ (item.price - 0).toFixed(2) }}</span>
-        <sapn class="love">{{ item.love }}</sapn>
+        <span class="love">{{ item.love }}</span>
       </div>
     </div>
   </div>
@@ -52,6 +52,7 @@ export default {
 .pic {
   overflow: hidden;
   width: 100%;
+  height: 150px;
   border-radius: 5px;
 }
 
