@@ -2,11 +2,12 @@
   <div class="goods">
     <div class="goods-item" v-for="item in list" :key="item">
       <div class="pic">
-        <img :src="item.img" alt="" />
+        <!-- 监听图片是否加载完成 -->
+        <img :src="item.img" alt="" @load="imgLoad" />
       </div>
       <div class="title">{{ item.title }}</div>
       <div class="msg">
-        <span class="price">{{ item.price }}</span>
+        <span class="price">{{ (item.price - 0).toFixed(2) }}</span>
         <sapn class="love">{{ item.love }}</sapn>
       </div>
     </div>
@@ -22,6 +23,11 @@ export default {
       default() {
         return [];
       },
+    },
+  },
+  methods: {
+    imgLoad() {
+      this.$emit("load");
     },
   },
 };
@@ -66,18 +72,21 @@ export default {
   color: rgb(255, 22, 193);
 }
 
+.price {
+  margin-right: 5px;
+}
+
 .love {
-  margin-left: 10px;
   color: #000;
 }
 
 @font-face {
   font-family: "iconfont"; /* Project id 3722003 */
-  src: url("./font_3722003_0vzzecmje64/iconfont.woff2?t=1666353421026")
+  src: url("./font_3722003_gcjwi0fa3pf/iconfont.woff2?t=1666353421026")
       format("woff2"),
-    url("./font_3722003_0vzzecmje64/iconfont.woff?t=1666353421026")
+    url("./font_3722003_gcjwi0fa3pf/iconfont.woff?t=1666353421026")
       format("woff"),
-    url("./font_3722003_0vzzecmje64/iconfont.ttf?t=1666353421026")
+    url("./font_3722003_gcjwi0fa3pf/iconfont.ttf?t=1666353421026")
       format("truetype");
 }
 
@@ -87,9 +96,10 @@ export default {
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  content: "\e666";
+  content: "\e600";
   display: inline-block;
   width: 20px;
   height: 20px;
+  color: #d0ceceb6;
 }
 </style>

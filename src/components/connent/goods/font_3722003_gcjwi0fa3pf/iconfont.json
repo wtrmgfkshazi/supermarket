@@ -1,0 +1,16 @@
+{
+  "id": "3722003",
+  "name": "vue",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "200844",
+      "name": "3.1收藏-选中",
+      "font_class": "31shoucangxuanzhong",
+      "unicode": "e600",
+      "unicode_decimal": 58880
+    }
+  ]
+}

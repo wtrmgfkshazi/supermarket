@@ -151,7 +151,6 @@ export default {
 .roll {
   position: relative;
   overflow: hidden;
-  margin-top: 44px;
   width: 100%;
   height: 95px;
 }

@@ -57,6 +57,7 @@ export default {
 }
 
 .tab-control div {
+  cursor: pointer;
   padding: 0 8px;
 }
 </style>
