@@ -9,7 +9,7 @@
     >
       <li v-for="(item, index) in list" :key="index">
         <a class="pic" :href="item.network">
-          <img :src="item.pic" alt="" @load="load" />
+          <img :src="item.pic" alt="" />
         </a>
       </li>
     </ul>
@@ -25,12 +25,18 @@
 </template>
 
 <script>
-import { request } from "@/network/request.js";
 export default {
   name: "Swiper",
+  props: {
+    list: {
+      type: Array,
+      default() {
+        return [];
+      },
+    },
+  },
   data() {
     return {
-      list: [],
       timer: null,
       animate: false,
       lNum: "-100%",
@@ -39,11 +45,9 @@ export default {
       endX: 0,
       movex: 0,
       ml: 0,
-      isLoad: false,
     };
   },
   created() {
-    this.getList();
     this.timeMove();
   },
   computed: {
@@ -52,39 +56,15 @@ export default {
       return this.list.slice(1, leng);
     },
   },
-  methods: {
-    //监听图片是否加载完成
-    load() {
-      if (!this.isLoad) {
-        this.$emit("load");
-        this.isLoad = !this.isLoad;
-      }
-    },
-
-    //动态获取轮播图数据
-    getList() {
-      request({
-        url: "/rollnav/rollPic",
-        methods: "get",
-      }).then(
-        (res) => {
-          this.list = res.data;
-          this.createPic();
-        },
-        (err) => {
-          console.log(err);
-        }
-      );
-    },
-
-    //动态生成前后两张图片
-    createPic() {
+  watch: {
+    list(item) {
       if (this.list.length > 0) {
         this.list.unshift(this.list[this.list.length - 1]);
         this.list.push(this.list[1]);
       }
     },
-
+  },
+  methods: {
     //改变小圆点的颜色
     getCicleColor(index) {
       return this.currentindex == index + 1

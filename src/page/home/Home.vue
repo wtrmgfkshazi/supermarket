@@ -23,9 +23,9 @@
     >
       <!-- 轮播图 -->
       <!-- 监听轮播图的加载，轮播图的体积较大，如果加载完成，其他小图片也是，可以计算tabcontrol的距离 -->
-      <swiper @load="imgLoad"></swiper>
+      <swiper :list="swiperList" @load="imgLoad"></swiper>
       <!-- 导航组件 -->
-      <nav-item></nav-item>
+      <nav-item :list="navList"></nav-item>
       <!-- 控制组件 -->
       <tab-control
         :title="indexTitle"
@@ -55,7 +55,7 @@ import Goods from "@/components/connent/goods/Goods.vue";
 import BackTop from "@/components/connent/backTop/BackTop.vue";
 
 //引入网络请求
-import { goods } from "@/network/home.js";
+import { swiper, nav, goods } from "@/network/home.js";
 
 //引入移动端滚动
 import Scroll from "@/components/comment/scroll/Scroll.vue";
@@ -67,11 +67,13 @@ export default {
   name: "Home",
   data() {
     return {
+      navList: [],
+      swiperList: [],
       indexTitle: ["流行", "新款", "精选"],
       goodsList: {
-        pops: { page: 0, list: [] },
-        news: { page: 0, list: [] },
-        sell: { page: 0, list: [] },
+        pops: { page: 0, list: [], y: 0 },
+        news: { page: 0, list: [], y: 0 },
+        sell: { page: 0, list: [], y: 0 },
       },
       typeTitle: ["pops", "news", "sell"],
       type: "pops",
@@ -90,18 +92,45 @@ export default {
     BackTop,
   },
   created() {
+    //请求导航栏数据
+    this.getList();
     this.getGoods("pops");
     this.getGoods("news");
     this.getGoods("sell");
   },
   methods: {
+    //导航栏网络请求 + 轮播图网络请求
+    getList() {
+      nav().then(
+        (res) => {
+          this.navList = res.data;
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
+      swiper().then(
+        (res) => {
+          this.swiperList = res.data;
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
+    },
+    //商品网络请求
     getGoods(type) {
       const page = this.goodsList[type].page + 1;
       this.goodsList[type].page = page;
-      goods(type, page).then((res) => {
-        if (!res.data) return true;
-        this.goodsList[type].list.push(...res.data);
-      });
+      goods(type, page).then(
+        (res) => {
+          if (!res.data) return true;
+          this.goodsList[type].list.push(...res.data);
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
     },
     showGoods(item) {
       this.type = this.typeTitle[item];

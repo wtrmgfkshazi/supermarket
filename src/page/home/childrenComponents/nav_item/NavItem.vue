@@ -8,30 +8,14 @@
 </template>
 
 <script>
-import { request } from "@/network/request.js";
 export default {
   name: "NavItem",
-  data() {
-    return {
-      list: [],
-    };
-  },
-  created() {
-    this.getList();
-  },
-  methods: {
-    getList() {
-      request({
-        url: "/rollnav/navPic",
-        methods: "get",
-      }).then(
-        (res) => {
-          this.list = res.data;
-        },
-        (err) => {
-          console.log(err);
-        }
-      );
+  props: {
+    list: {
+      type: Array,
+      default() {
+        return [];
+      },
     },
   },
 };
