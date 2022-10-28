@@ -9,7 +9,7 @@
     >
       <li v-for="(item, index) in list" :key="index">
         <a class="pic" :href="item.network">
-          <img :src="item.pic" alt="" />
+          <img :src="item.pic" alt="" @load="imgLoad" />
         </a>
       </li>
     </ul>
@@ -45,6 +45,7 @@ export default {
       endX: 0,
       movex: 0,
       ml: 0,
+      isLoad: false,
     };
   },
   created() {
@@ -59,12 +60,18 @@ export default {
   watch: {
     list(item) {
       if (this.list.length > 0) {
-        this.list.unshift(this.list[this.list.length - 1]);
-        this.list.push(this.list[1]);
+        item.unshift(this.list[this.list.length - 1]);
+        item.push(this.list[1]);
       }
     },
   },
   methods: {
+    imgLoad() {
+      if (!this.isLoad) {
+        this.$emit("load");
+        this.isLoad = true;
+      }
+    },
     //改变小圆点的颜色
     getCicleColor(index) {
       return this.currentindex == index + 1

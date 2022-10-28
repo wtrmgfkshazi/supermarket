@@ -71,9 +71,9 @@ export default {
       swiperList: [],
       indexTitle: ["流行", "新款", "精选"],
       goodsList: {
-        pops: { page: 0, list: [], y: 0 },
-        news: { page: 0, list: [], y: 0 },
-        sell: { page: 0, list: [], y: 0 },
+        pops: { page: 0, list: [] },
+        news: { page: 0, list: [] },
+        sell: { page: 0, list: [] },
       },
       typeTitle: ["pops", "news", "sell"],
       type: "pops",
@@ -134,6 +134,9 @@ export default {
     },
     showGoods(item) {
       this.type = this.typeTitle[item];
+      if (this.isFixed) {
+        this.$refs.scroll.scrollTo(0, -this.offsetTop, 0);
+      }
       //让吸顶的导航栏和不吸顶的导航栏点击的内容保持一致
       this.$refs.tabcontrol1.currentIndex = item;
       this.$refs.tabcontrol2.currentIndex = item;
